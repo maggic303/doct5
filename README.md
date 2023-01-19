@@ -15,9 +15,7 @@
 !wc predicted_queries_topk.txt-1004000
 ```
 
-将预测查询附加到原始 MS MARCO 段落集合中：
-
-输出在 /data/students/nieyj/code/docT5query/output/msmarco-passage-expanded
+将预测查询附加到原始段落集合中：
 
 ```text
 !python /data/students/nieyj/code/docT5query/convert_msmarco_passage_to_anserini.py \   --collection_path=/data/students/nieyj/code/docT5query/data/collection.tsv \    predictions/predicted_queries_topk.txt-1004000 \   --output_folder=/data/students/nieyj/code/docT5query/output/msmarco-passage-expanded
@@ -29,7 +27,7 @@
 !sh /data/students/nieyj/code/docT5query/anserini/target/appassembler/bin/IndexCollection \  -collection JsonCollection -generator DefaultLuceneDocumentGenerator \   -threads 9 -input /data/students/nieyj/code/docT5query/output/msmarco-passage-expanded -index lucene-index-msmarco-passage-expanded
 ```
 
-MS MARCO 开发集的每个查询检索 1000 个段落：
+数据集中的每个查询检索 1000 个段落：
 
 ```text
 !sh /data/students/nieyj/code/docT5query/anserini/target/appassembler/bin/SearchCollection \   -index /data/students/nieyj/code/docT5query/data/lucene-index-msmarco-passage-expanded -topics /data/students/nieyj/code/docT5query/data/queries.dev.small.tsv \   -topicreader TsvInt \    -output /data/students/nieyj/code/docT5query/anserini/runs/run.msmarco-passage-expanded.dev.small.txt \   -bm25 \   -hits 1000 -threads 8
